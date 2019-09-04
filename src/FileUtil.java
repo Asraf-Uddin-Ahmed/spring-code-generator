@@ -49,6 +49,19 @@ public class FileUtil {
         }
     }
 
+    static void createMapperFile(String fileName, String mapperIntfStr, String mapperImplStr) {
+        final String OUTPUT_FOLDER_MAPPER_INTF = OUTPUT_FOLDER + "mapper\\intf\\";
+        final String OUTPUT_FOLDER_MAPPER_IMPL = OUTPUT_FOLDER + "mapper\\impl\\";
+        String resultMapperIntfStr = MessageFormat.format(mapperIntfStr, PACKAGE_ROOT, fileName);
+        String resultMapperImplStr = MessageFormat.format(mapperImplStr, PACKAGE_ROOT, fileName);
+        try {
+            createTextFile(OUTPUT_FOLDER_MAPPER_INTF + fileName + "Mapper.java", resultMapperIntfStr);
+            createTextFile(OUTPUT_FOLDER_MAPPER_IMPL + fileName + "MapperImpl.java", resultMapperImplStr);
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
     static String readFileAsString(String fileName) throws IOException {
         String data = "";
         data = new String(Files.readAllBytes(Paths.get(fileName)));

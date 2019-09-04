@@ -17,6 +17,8 @@ public class Main {
         String repoCrudStr = FileUtil.readFileAsString("RepositoryCrud.txt");
         String requestDtoStr = FileUtil.readFileAsString("RequestDto.txt");
         String responseDtoStr = FileUtil.readFileAsString("ResponseDto.txt");
+        String mapperIntfStr = FileUtil.readFileAsString("Mapper.txt");
+        String mapperImplStr = FileUtil.readFileAsString("MapperImpl.txt");
 
         File folder = new File(INPUT_ENTITY_FOLDER);
         List<File> files =  Arrays.stream(folder.listFiles())
@@ -36,6 +38,7 @@ public class Main {
             FileUtil.createRepositoryFile(fileName, repoStr, repoCrudStr);
             FileUtil.createRequestDtoFile(fileName, requestDtoStr, strFields);
             FileUtil.createResponseDtoFile(fileName, responseDtoStr, strFields);
+            FileUtil.createMapperFile(fileName, mapperIntfStr, mapperImplStr);
             strFields = "";
         }
 

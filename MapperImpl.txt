@@ -1,0 +1,23 @@
+package {0}.dtos.mapper.persistence;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import {0}.dtos.mapper.{1}Mapper;
+import {0}.dtos.request.entities.{1}RequestDto;
+import {0}.dtos.response.entities.{1}ResponseDto;
+import {0}.entities.{1};
+
+@Component
+@Scope(value = "prototype")
+public class {1}MapperImpl extends RequestResponseDtoMapperImpl<{1}, {1}ResponseDto, {1}RequestDto> implements {1}Mapper '{'
+
+	@Autowired
+	public {1}MapperImpl(ModelMapper modelMapper) '{'
+		super(modelMapper, {1}ResponseDto.class, {1}.class);
+	'}'
+
+'}'

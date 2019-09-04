@@ -1,0 +1,8 @@
+package {0}.dtos.mapper;
+
+import {0}.dtos.request.entities.{1}RequestDto;
+import {0}.dtos.response.entities.{1}ResponseDto;
+import {0}.entities.{1};
+
+public interface {1}Mapper extends RequestResponseDtoMapper<{1}, {1}ResponseDto, {1}RequestDto> '{'
+'}'
