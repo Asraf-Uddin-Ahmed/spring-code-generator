@@ -13,12 +13,12 @@ public class Main {
     private static final String INPUT_ENTITY_FOLDER = "F:\\crichubs-resource\\src\\main\\java\\com\\crichubs\\rsrc\\entities";
 
     public static void main(String[] args) throws IOException {
-        String repoStr = FileUtil.readFileAsString("Repository.txt");
-        String repoCrudStr = FileUtil.readFileAsString("RepositoryCrud.txt");
-        String requestDtoStr = FileUtil.readFileAsString("RequestDto.txt");
-        String responseDtoStr = FileUtil.readFileAsString("ResponseDto.txt");
-        String mapperIntfStr = FileUtil.readFileAsString("Mapper.txt");
-        String mapperImplStr = FileUtil.readFileAsString("MapperImpl.txt");
+        String repoStr = FileUtil.readFileAsString("template\\Repository.txt");
+        String repoCrudStr = FileUtil.readFileAsString("template\\RepositoryCrud.txt");
+        String requestDtoStr = FileUtil.readFileAsString("template\\RequestDto.txt");
+        String responseDtoStr = FileUtil.readFileAsString("template\\ResponseDto.txt");
+        String mapperIntfStr = FileUtil.readFileAsString("template\\Mapper.txt");
+        String mapperImplStr = FileUtil.readFileAsString("template\\MapperImpl.txt");
 
         File folder = new File(INPUT_ENTITY_FOLDER);
         List<File> files =  Arrays.stream(folder.listFiles())
