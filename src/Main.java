@@ -3,8 +3,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -17,15 +19,25 @@ public class Main {
         String responseDtoStr = FileUtil.readFileAsString("ResponseDto.txt");
 
         File folder = new File(INPUT_ENTITY_FOLDER);
-        Arrays.stream(folder.listFiles()).filter(File::isFile).forEach(file -> {
+        List<File> files =  Arrays.stream(folder.listFiles())
+                .filter(File::isFile)
+                .sorted((o1, o2) -> -o1.getName().compareTo(o2.getName()))
+                .collect(Collectors.toList());
+        String strFields = "";
+        for(File file : files) {
             String fileName = FileUtil.getFileNameWithoutExtension(file.getName());
+            strFields += getAllLangFields(file);
+            System.out.print(fileName + " -> ");
+            if (fileName.endsWith("Id")) {
+                continue;
+            }
             System.out.println(fileName);
-            String strFields = getAllLangFields(file);
 
             FileUtil.createRepositoryFile(fileName, repoStr, repoCrudStr);
             FileUtil.createRequestDtoFile(fileName, requestDtoStr, strFields);
             FileUtil.createResponseDtoFile(fileName, responseDtoStr, strFields);
-        });
+            strFields = "";
+        }
 
     }
 
