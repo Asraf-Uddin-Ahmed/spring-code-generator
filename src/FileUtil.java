@@ -8,17 +8,15 @@ import java.text.MessageFormat;
 
 public class FileUtil {
     private static final String PACKAGE_ROOT = "com.crichubs.rsrc";
-    private static final String PACKAGE_REPO = PACKAGE_ROOT + ".repositories";
-    private static final String PACKAGE_ENTITY = PACKAGE_ROOT + ".entities";
-    private static final String PACKAGE_REQUEST_DTO = PACKAGE_ROOT + ".dtos.request";
 
     private static final String OUTPUT_FOLDER = "out_file\\";
-    private static final String OUTPUT_FOLDER_REPO = OUTPUT_FOLDER + "repositories\\";
-    private static final String OUTPUT_FOLDER_REQUEST_DTO = OUTPUT_FOLDER + "request_dto\\";
-    private static final String OUTPUT_FOLDER_RESPONSE_DTO = OUTPUT_FOLDER + "response_dto\\";
 
 
     static void createRepositoryFile(String fileName, String repoStr, String repoCrudStr) {
+        final String PACKAGE_REPO = PACKAGE_ROOT + ".repositories";
+        final String PACKAGE_ENTITY = PACKAGE_ROOT + ".entities";
+        final String OUTPUT_FOLDER_REPO = OUTPUT_FOLDER + "repositories\\";
+
         String resultRepoStr = MessageFormat.format(repoStr, PACKAGE_REPO, PACKAGE_ENTITY, fileName);
         String resultRepoCrudStr = MessageFormat.format(repoCrudStr, PACKAGE_REPO, PACKAGE_ENTITY, fileName);
         try {
@@ -30,9 +28,22 @@ public class FileUtil {
     }
 
     static void createRequestDtoFile(String fileName, String requestDtoStr, String strFields) {
+        final String PACKAGE_REQUEST_DTO = PACKAGE_ROOT + ".dtos.request";
+        final String OUTPUT_FOLDER_REQUEST_DTO = OUTPUT_FOLDER + "request_dto\\";
         String resultRequestDtoStr = MessageFormat.format(requestDtoStr, PACKAGE_REQUEST_DTO, fileName, strFields);
         try {
             createTextFile(OUTPUT_FOLDER_REQUEST_DTO + fileName + "RequestDto.java", resultRequestDtoStr);
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void createResponseDtoFile(String fileName, String responseDtoStr, String strFields) {
+        final String PACKAGE_RESPONSE_DTO = PACKAGE_ROOT + ".dtos.response";
+        final String OUTPUT_FOLDER_RESPONSE_DTO = OUTPUT_FOLDER + "response_dto\\";
+        String resultResponseDtoStr = MessageFormat.format(responseDtoStr, PACKAGE_RESPONSE_DTO, fileName, strFields);
+        try {
+            createTextFile(OUTPUT_FOLDER_RESPONSE_DTO + fileName + "ResponseDto.java", resultResponseDtoStr);
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }

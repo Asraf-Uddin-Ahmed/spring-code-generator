@@ -14,6 +14,7 @@ public class Main {
         String repoStr = FileUtil.readFileAsString("Repository.txt");
         String repoCrudStr = FileUtil.readFileAsString("RepositoryCrud.txt");
         String requestDtoStr = FileUtil.readFileAsString("RequestDto.txt");
+        String responseDtoStr = FileUtil.readFileAsString("ResponseDto.txt");
 
         File folder = new File(INPUT_ENTITY_FOLDER);
         Arrays.stream(folder.listFiles()).filter(File::isFile).forEach(file -> {
@@ -21,8 +22,9 @@ public class Main {
             System.out.println(fileName);
             String strFields = getAllLangFields(file);
 
-            FileUtil.createRequestDtoFile(fileName, requestDtoStr, strFields);
             FileUtil.createRepositoryFile(fileName, repoStr, repoCrudStr);
+            FileUtil.createRequestDtoFile(fileName, requestDtoStr, strFields);
+            FileUtil.createResponseDtoFile(fileName, responseDtoStr, strFields);
         });
 
     }

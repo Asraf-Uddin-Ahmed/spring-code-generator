@@ -1,0 +1,11 @@
+package {0}.entities;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class {1}ResponseDto extends BaseEntityResponseDto '{'{2}
+'}'
