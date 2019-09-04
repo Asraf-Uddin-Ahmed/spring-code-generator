@@ -184,3 +184,4 @@ uploads/
 /dist/
 /nbdist/
 /.nb-gradle/
+/out_file

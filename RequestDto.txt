@@ -1,0 +1,13 @@
+package {0}.entities;
+
+import {0}.BaseRequestDto;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class {1}RequestDto extends BaseRequestDto '{'{2}
+'}'
