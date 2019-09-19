@@ -62,6 +62,20 @@ public class FileUtil {
         }
     }
 
+    static void createServiceFile(String fileName, String serviceStr, String serviceImplStr) {
+        String fileNameInCamelCase = Character.toLowerCase(fileName.charAt(0)) + fileName.substring(1);;
+        final String OUTPUT_FOLDER_SERVICE_INTF = OUTPUT_FOLDER + "service\\intf\\";
+        final String OUTPUT_FOLDER_SERVICE_IMPL = OUTPUT_FOLDER + "service\\impl\\";
+        String resultServiceIntfStr = MessageFormat.format(serviceStr, PACKAGE_ROOT, fileName, fileNameInCamelCase);
+        String resultServiceImplStr = MessageFormat.format(serviceImplStr, PACKAGE_ROOT, fileName, fileNameInCamelCase);
+        try {
+            createTextFile(OUTPUT_FOLDER_SERVICE_INTF + fileName + "Service.java", resultServiceIntfStr);
+            createTextFile(OUTPUT_FOLDER_SERVICE_IMPL + fileName + "ServiceImpl.java", resultServiceImplStr);
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
     static String readFileAsString(String fileName) throws IOException {
         String data = "";
         data = new String(Files.readAllBytes(Paths.get(fileName)));

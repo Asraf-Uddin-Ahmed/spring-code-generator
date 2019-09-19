@@ -1,0 +1,58 @@
+package {0}.services.persistence;
+
+import java.util.NoSuchElementException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import {0}.entities.{1};
+import {0}.repositories.{1}Repository;
+import {0}.rsql.CustomRsqlVisitor;
+import {0}.services.{1}Service;
+import {0}.utils.ExceptionPreconditions;
+import {0}.utils.StringUtils;
+
+import cz.jirutka.rsql.parser.RSQLParser;
+import cz.jirutka.rsql.parser.ast.Node;
+
+@Service
+@Transactional
+public class {1}ServiceImpl implements {1}Service '{'
+
+	private {1}Repository {2}Repository;
+
+	@Autowired
+	public {1}ServiceImpl({1}Repository {2}Repository) '{'
+		this.{2}Repository = {2}Repository;
+	'}'
+
+	public {1} save({1} {2}) '{'
+		return {2}Repository.save({2});
+	'}'
+
+	public void delete({1} {2}) '{'
+		{2}Repository.delete({2});
+	'}'
+
+	public {1} getById(Long id) '{'
+		try '{'
+			return {2}Repository.findById(id).get();
+		'}' catch (NoSuchElementException nseex) '{'
+			return ExceptionPreconditions.entityNotFound({1}.class, "id", id.toString());
+		'}'
+	'}'
+
+	public Page<{1}> getByQuery(String search, Pageable pageable) '{'
+		if (StringUtils.isNullOrEmpty(search))
+			return {2}Repository.findAll(pageable);
+		Node rootNode = new RSQLParser().parse(search);
+		Specification<{1}> spec = rootNode.accept(new CustomRsqlVisitor<{1}>());
+		Page<{1}> {2} = {2}Repository.findAll(spec, pageable);
+		return {2};
+	'}'
+
+'}'

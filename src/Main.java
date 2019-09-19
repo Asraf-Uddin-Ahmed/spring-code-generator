@@ -19,6 +19,8 @@ public class Main {
         String responseDtoStr = FileUtil.readFileAsString("template\\ResponseDto.txt");
         String mapperIntfStr = FileUtil.readFileAsString("template\\Mapper.txt");
         String mapperImplStr = FileUtil.readFileAsString("template\\MapperImpl.txt");
+        String serviceStr = FileUtil.readFileAsString("template\\Service.txt");
+        String serviceImplStr = FileUtil.readFileAsString("template\\ServiceImpl.txt");
 
         File folder = new File(INPUT_ENTITY_FOLDER);
         List<File> files =  Arrays.stream(folder.listFiles())
@@ -39,6 +41,7 @@ public class Main {
             FileUtil.createRequestDtoFile(fileName, requestDtoStr, strFields);
             FileUtil.createResponseDtoFile(fileName, responseDtoStr, strFields);
             FileUtil.createMapperFile(fileName, mapperIntfStr, mapperImplStr);
+            FileUtil.createServiceFile(fileName, serviceStr, serviceImplStr);
             strFields = "";
         }
 

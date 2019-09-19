@@ -1,0 +1,18 @@
+package {0}.services;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import {0}.entities.{1};
+
+public interface {1}Service '{'
+
+	{1} save({1} {2});
+
+	void delete({1} {2});
+
+	{1} getById(Long id);
+
+	Page<{1}> getByQuery(String search, Pageable pageable);
+
+'}'
