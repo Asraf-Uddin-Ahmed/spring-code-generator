@@ -1,3 +1,5 @@
+import org.jboss.dna.common.text.Inflector;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -63,14 +65,29 @@ public class FileUtil {
     }
 
     static void createServiceFile(String fileName, String serviceStr, String serviceImplStr) {
-        String fileNameInCamelCase = Character.toLowerCase(fileName.charAt(0)) + fileName.substring(1);;
         final String OUTPUT_FOLDER_SERVICE_INTF = OUTPUT_FOLDER + "service\\intf\\";
         final String OUTPUT_FOLDER_SERVICE_IMPL = OUTPUT_FOLDER + "service\\impl\\";
+
+        String fileNameInCamelCase = Inflector.getInstance().lowerCamelCase(fileName);
         String resultServiceIntfStr = MessageFormat.format(serviceStr, PACKAGE_ROOT, fileName, fileNameInCamelCase);
         String resultServiceImplStr = MessageFormat.format(serviceImplStr, PACKAGE_ROOT, fileName, fileNameInCamelCase);
         try {
             createTextFile(OUTPUT_FOLDER_SERVICE_INTF + fileName + "Service.java", resultServiceIntfStr);
             createTextFile(OUTPUT_FOLDER_SERVICE_IMPL + fileName + "ServiceImpl.java", resultServiceImplStr);
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void createResourceFile(String fileName, String resourceStr) {
+        final String OUTPUT_FOLDER_RESOURCE = OUTPUT_FOLDER + "resource\\";
+
+        String fileNameInCamelCase = Inflector.getInstance().lowerCamelCase(fileName);
+        Inflector inflector = Inflector.getInstance();
+        String hyphenSeparatedPluralizedFileName = inflector.underscore(inflector.pluralize(fileName)).replaceAll("_", "-");
+        String resultResourceStr = MessageFormat.format(resourceStr, PACKAGE_ROOT, fileName, fileNameInCamelCase, hyphenSeparatedPluralizedFileName);
+        try {
+            createTextFile(OUTPUT_FOLDER_RESOURCE + fileName + "Resource.java", resultResourceStr);
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }

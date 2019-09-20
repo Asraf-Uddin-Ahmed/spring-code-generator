@@ -1,3 +1,5 @@
+import org.jboss.dna.common.text.Inflector;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -10,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    private static final String INPUT_ENTITY_FOLDER = "F:\\crichubs-resource\\src\\main\\java\\com\\crichubs\\rsrc\\entities";
+    private static final String INPUT_ENTITY_FOLDER = "D:\\Work\\Group\\crichubs\\crichubs-resource\\src\\main\\java\\com\\crichubs\\rsrc\\entities";
 
     public static void main(String[] args) throws IOException {
         String repoStr = FileUtil.readFileAsString("template\\Repository.txt");
@@ -21,6 +23,7 @@ public class Main {
         String mapperImplStr = FileUtil.readFileAsString("template\\MapperImpl.txt");
         String serviceStr = FileUtil.readFileAsString("template\\Service.txt");
         String serviceImplStr = FileUtil.readFileAsString("template\\ServiceImpl.txt");
+        String resourceStr = FileUtil.readFileAsString("template\\Resource.txt");
 
         File folder = new File(INPUT_ENTITY_FOLDER);
         List<File> files =  Arrays.stream(folder.listFiles())
@@ -42,6 +45,7 @@ public class Main {
             FileUtil.createResponseDtoFile(fileName, responseDtoStr, strFields);
             FileUtil.createMapperFile(fileName, mapperIntfStr, mapperImplStr);
             FileUtil.createServiceFile(fileName, serviceStr, serviceImplStr);
+            FileUtil.createResourceFile(fileName, resourceStr);
             strFields = "";
         }
 

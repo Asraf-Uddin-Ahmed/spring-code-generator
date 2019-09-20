@@ -15,11 +15,11 @@ import com.crichubs.rsrc.resources.ExtendedLink;
 import lombok.Getter;
 
 @Getter
-public class AppVideoResource extends BaseResource {
+public class AppVideoResource extends BaseResource '{'
 
 	private final AppVideoResponseDto appVideo;
 
-	public AppVideoResource(final AppVideo appVideo, final AppVideoMapper appVideoMapper) {
+	public AppVideoResource(final AppVideo appVideo, final AppVideoMapper appVideoMapper) '{'
 
 		this.appVideo = appVideoMapper.getResponseDto(appVideo);
 		final long id = appVideo.getId();
@@ -31,20 +31,20 @@ public class AppVideoResource extends BaseResource {
 
 		this.loadCommonLink();
 
-	}
+	'}'
 
-	public AppVideoResource forDeletion() {
+	public AppVideoResource forDeletion() '{'
 		super.removeLinks();
 		this.loadCommonLink();
 		return this;
-	}
+	'}'
 
-	private void loadCommonLink() {
+	private void loadCommonLink() '{'
 		add(new ExtendedLink(linkTo(methodOn(AppVideoController.class).create(null)).withRel("create"))
 				.withMethod(HttpMethod.POST));
 		add(new ExtendedLink(linkTo(methodOn(AppVideoController.class).getRequests()).withRel("requests"))
 				.withMethod(HttpMethod.GET));
-		add(new ExtendedLink(linkTo(AppVideoController.class).withRel("app-videos"))
+		add(new ExtendedLink(linkTo(AppVideoController.class).withRel("{3}"))
 				.withMethod(HttpMethod.GET).withSearchableData());
-	}
-}
+	'}'
+'}'
