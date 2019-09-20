@@ -1,0 +1,103 @@
+package {0}.controllers;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+import java.net.URI;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import {0}.dtos.mapper.{1}Mapper;
+import {0}.dtos.request.entities.{1}RequestDto;
+import {0}.dtos.response.requestdto.RequestBodyResponseDto;
+import {0}.dtos.response.requestdto.RequestDataCollectionResponseDto;
+import {0}.entities.{1};
+import {0}.resources.assemblers.entities.{1}ResourceAssembler;
+import {0}.resources.entities.{1}Resource;
+import {0}.services.{1}Service;
+
+@RestController
+@RequestMapping("/{3}")
+public class {1}Controller extends BaseController '{'
+
+	private final {1}Service {2}Service;
+	private final {1}Mapper {2}Mappper;
+	private final {1}ResourceAssembler {2}ResourceAssembler;
+
+	@Autowired
+	public {1}Controller({1}Service {2}Service, {1}Mapper {2}Mappper,
+			{1}ResourceAssembler {2}ResourceAssembler) '{'
+		this.{2}Mappper = {2}Mappper;
+		this.{2}Service = {2}Service;
+		this.{2}ResourceAssembler = {2}ResourceAssembler;
+	'}'
+
+	@GetMapping("")
+	public PagedResources<{1}Resource> getByQuery(String search, Pageable pageable,
+			PagedResourcesAssembler<{1}> pagedAssembler) '{'
+		Page<{1}> {2}s = {2}Service.getByQuery(search, pageable);
+		return pagedAssembler.toResource({2}s, this.{2}ResourceAssembler);
+	'}'
+
+	@GetMapping("/'{'id'}'")
+	public {1}Resource getById(@PathVariable long id) '{'
+		{1} {2} = {2}Service.getById(id);
+		return this.{2}ResourceAssembler.toResource({2});
+	'}'
+
+	@PostMapping("")
+	@ResponseStatus(HttpStatus.CREATED)
+	public {1}Resource create(@Valid @RequestBody {1}RequestDto requestDto) '{'
+		{1} {2} = {2}Mappper.getEntity(requestDto);
+		{2}Service.save({2});
+		return this.{2}ResourceAssembler.toResource({2});
+	'}'
+
+	@DeleteMapping("/'{'id'}'")
+	public {1}Resource delete(@PathVariable long id) '{'
+		{1} {2} = {2}Service.getById(id);
+		{1}Resource response = this.{2}ResourceAssembler.toResource({2}).forDeletion();
+		{2}Service.delete({2});
+		return response;
+	'}'
+
+	@PutMapping("/'{'id'}'")
+	public {1}Resource update(@PathVariable long id, @Valid @RequestBody {1}RequestDto requestDto) '{'
+		{1} {2} = {2}Service.getById(id);
+		{2}Mappper.loadEntity(requestDto, {2});
+		{2}Service.save({2});
+		return this.{2}ResourceAssembler.toResource({2});
+	'}'
+
+	@GetMapping("/requests")
+	public RequestDataCollectionResponseDto getRequests() '{'
+		RequestDataCollectionResponseDto requestDataCollection = new RequestDataCollectionResponseDto();
+		this.addRequestDataOfPost(requestDataCollection);
+		return requestDataCollection;
+	'}'
+
+	private {1}Controller addRequestDataOfPost(RequestDataCollectionResponseDto requestDataCollection) '{'
+		RequestBodyResponseDto<{1}RequestDto> requestBody = new RequestBodyResponseDto<{1}RequestDto>(
+				{1}RequestDto.class);
+		URI uri = linkTo(methodOn({1}Controller.class).create(null)).toUri();
+		requestDataCollection.addRequest(uri, org.springframework.http.HttpMethod.POST, requestBody);
+		return this;
+	'}'
+
+'}'

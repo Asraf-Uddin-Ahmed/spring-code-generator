@@ -105,6 +105,20 @@ public class FileUtil {
         }
     }
 
+    static void createControllerFile(String fileName, String controllerStr) {
+        final String OUTPUT_FOLDER_CONTROLLER = OUTPUT_FOLDER + "controller\\";
+
+        String fileNameInCamelCase = Inflector.getInstance().lowerCamelCase(fileName);
+        Inflector inflector = Inflector.getInstance();
+        String hyphenSeparatedPluralizedFileName = inflector.underscore(inflector.pluralize(fileName)).replaceAll("_", "-");
+        String resultControllerStr = MessageFormat.format(controllerStr, PACKAGE_ROOT, fileName, fileNameInCamelCase, hyphenSeparatedPluralizedFileName);
+        try {
+            createTextFile(OUTPUT_FOLDER_CONTROLLER + fileName + "Controller.java", resultControllerStr);
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
     static String readFileAsString(String fileName) throws IOException {
         String data = "";
         data = new String(Files.readAllBytes(Paths.get(fileName)));

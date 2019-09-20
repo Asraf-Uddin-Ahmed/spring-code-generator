@@ -25,6 +25,7 @@ public class Main {
         String serviceImplStr = FileUtil.readFileAsString("template\\ServiceImpl.txt");
         String resourceStr = FileUtil.readFileAsString("template\\Resource.txt");
         String resourceAssemblerStr = FileUtil.readFileAsString("template\\ResourceAssembler.txt");
+        String controllerStr = FileUtil.readFileAsString("template\\Controller.txt");
 
         File folder = new File(INPUT_ENTITY_FOLDER);
         List<File> files =  Arrays.stream(folder.listFiles())
@@ -48,6 +49,7 @@ public class Main {
             FileUtil.createServiceFile(fileName, serviceStr, serviceImplStr);
             FileUtil.createResourceFile(fileName, resourceStr);
             FileUtil.createResourceAssemblerFile(fileName, resourceAssemblerStr);
+            FileUtil.createControllerFile(fileName, controllerStr);
             strFields = "";
         }
 
