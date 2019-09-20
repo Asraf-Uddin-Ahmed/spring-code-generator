@@ -93,6 +93,18 @@ public class FileUtil {
         }
     }
 
+    static void createResourceAssemblerFile(String fileName, String resourceAssemblerStr) {
+        final String OUTPUT_FOLDER_RESOURCE_ASSEMBLER = OUTPUT_FOLDER + "resource_assembler\\";
+
+        String fileNameInCamelCase = Inflector.getInstance().lowerCamelCase(fileName);
+        String resultResourceAssemblerStr = MessageFormat.format(resourceAssemblerStr, PACKAGE_ROOT, fileName, fileNameInCamelCase);
+        try {
+            createTextFile(OUTPUT_FOLDER_RESOURCE_ASSEMBLER + fileName + "ResourceAssembler.java", resultResourceAssemblerStr);
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
     static String readFileAsString(String fileName) throws IOException {
         String data = "";
         data = new String(Files.readAllBytes(Paths.get(fileName)));

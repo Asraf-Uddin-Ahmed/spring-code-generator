@@ -1,0 +1,28 @@
+package {0}.resources.assemblers.entities;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import {0}.controllers.{1}Controller;
+import {0}.dtos.mapper.{1}Mapper;
+import {0}.entities.{1};
+import {0}.resources.assemblers.BaseResourceAssembler;
+import {0}.resources.entities.{1}Resource;
+
+@Component
+public class {1}ResourceAssembler extends BaseResourceAssembler<{1}, {1}Resource> '{'
+
+	private final {1}Mapper {2}Mapper;
+
+	@Autowired
+	public {1}ResourceAssembler({1}Mapper {2}Mapper) '{'
+		super({1}Controller.class, {1}Resource.class);
+		this.{2}Mapper = {2}Mapper;
+	'}'
+
+	@Override
+	public {1}Resource toResource({1} entity) '{'
+		return new {1}Resource(entity, {2}Mapper);
+	'}'
+
+'}'
