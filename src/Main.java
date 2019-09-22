@@ -1,20 +1,16 @@
-import org.jboss.dna.common.text.Inflector;
-
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Main {
 
-    private static final String INPUT_ENTITY_FOLDER = "D:\\Work\\Group\\crichubs\\crichubs-resource\\src\\main\\java\\com\\crichubs\\rsrc\\entities";
+    private static final String INPUT_ENTITY_FOLDER = "F:\\crichubs-resource\\src\\main\\java\\com\\crichubs\\rsrc\\entities";
 
     public static void main(String[] args) throws IOException {
+        FileUtil.createOutputDirectoryIfNotExists();
+
         String repoStr = FileUtil.readFileAsString("template\\Repository.txt");
         String repoCrudStr = FileUtil.readFileAsString("template\\RepositoryCrud.txt");
         String requestDtoStr = FileUtil.readFileAsString("template\\RequestDto.txt");
@@ -57,8 +53,7 @@ public class Main {
 
     private static String getAllLangFields(File file) {
         String strFields = "";
-        try {
-            Scanner scanner = new Scanner(file.toPath());
+        try (Scanner scanner = new Scanner(file.toPath())){
             while(scanner.hasNextLine()){
                 String line = scanner.nextLine().trim();
                 if(line.startsWith("private") && line.endsWith(";") && isLangDataTypeExists(line)) {

@@ -1,23 +1,44 @@
 import org.jboss.dna.common.text.Inflector;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 
-public class FileUtil {
+class FileUtil {
     private static final String PACKAGE_ROOT = "com.crichubs.rsrc";
 
     private static final String OUTPUT_FOLDER = "out_file\\";
+    private static final String OUTPUT_FOLDER_REPO = OUTPUT_FOLDER + "repositories\\";
+    private static final String OUTPUT_FOLDER_REQUEST_DTO = OUTPUT_FOLDER + "request_dto\\";
+    private static final String OUTPUT_FOLDER_RESPONSE_DTO = OUTPUT_FOLDER + "response_dto\\";
+    private static final String OUTPUT_FOLDER_MAPPER_INTF = OUTPUT_FOLDER + "mapper\\intf\\";
+    private static final String OUTPUT_FOLDER_MAPPER_IMPL = OUTPUT_FOLDER + "mapper\\impl\\";
+    private static final String OUTPUT_FOLDER_SERVICE_INTF = OUTPUT_FOLDER + "service\\intf\\";
+    private static final String OUTPUT_FOLDER_SERVICE_IMPL = OUTPUT_FOLDER + "service\\impl\\";
+    private static final String OUTPUT_FOLDER_RESOURCE = OUTPUT_FOLDER + "resource\\";
+    private static final String OUTPUT_FOLDER_RESOURCE_ASSEMBLER = OUTPUT_FOLDER + "resource_assembler\\";
+    private static final String OUTPUT_FOLDER_CONTROLLER = OUTPUT_FOLDER + "controller\\";
 
+    private FileUtil(){}
+
+    static void createOutputDirectoryIfNotExists() {
+        new File(OUTPUT_FOLDER).mkdirs();
+        new File(OUTPUT_FOLDER_REPO).mkdirs();
+        new File(OUTPUT_FOLDER_REQUEST_DTO).mkdirs();
+        new File(OUTPUT_FOLDER_RESPONSE_DTO).mkdirs();
+        new File(OUTPUT_FOLDER_MAPPER_INTF).mkdirs();
+        new File(OUTPUT_FOLDER_MAPPER_IMPL).mkdirs();
+        new File(OUTPUT_FOLDER_SERVICE_INTF).mkdirs();
+        new File(OUTPUT_FOLDER_SERVICE_IMPL).mkdirs();
+        new File(OUTPUT_FOLDER_RESOURCE).mkdirs();
+        new File(OUTPUT_FOLDER_RESOURCE_ASSEMBLER).mkdirs();
+        new File(OUTPUT_FOLDER_CONTROLLER).mkdirs();
+    }
 
     static void createRepositoryFile(String fileName, String repoStr, String repoCrudStr) {
         final String PACKAGE_REPO = PACKAGE_ROOT + ".repositories";
         final String PACKAGE_ENTITY = PACKAGE_ROOT + ".entities";
-        final String OUTPUT_FOLDER_REPO = OUTPUT_FOLDER + "repositories\\";
 
         String resultRepoStr = MessageFormat.format(repoStr, PACKAGE_REPO, PACKAGE_ENTITY, fileName);
         String resultRepoCrudStr = MessageFormat.format(repoCrudStr, PACKAGE_REPO, PACKAGE_ENTITY, fileName);
@@ -31,7 +52,6 @@ public class FileUtil {
 
     static void createRequestDtoFile(String fileName, String requestDtoStr, String strFields) {
         final String PACKAGE_REQUEST_DTO = PACKAGE_ROOT + ".dtos.request";
-        final String OUTPUT_FOLDER_REQUEST_DTO = OUTPUT_FOLDER + "request_dto\\";
         String resultRequestDtoStr = MessageFormat.format(requestDtoStr, PACKAGE_REQUEST_DTO, fileName, strFields);
         try {
             createTextFile(OUTPUT_FOLDER_REQUEST_DTO + fileName + "RequestDto.java", resultRequestDtoStr);
@@ -42,7 +62,6 @@ public class FileUtil {
 
     static void createResponseDtoFile(String fileName, String responseDtoStr, String strFields) {
         final String PACKAGE_RESPONSE_DTO = PACKAGE_ROOT + ".dtos.response";
-        final String OUTPUT_FOLDER_RESPONSE_DTO = OUTPUT_FOLDER + "response_dto\\";
         String resultResponseDtoStr = MessageFormat.format(responseDtoStr, PACKAGE_RESPONSE_DTO, fileName, strFields);
         try {
             createTextFile(OUTPUT_FOLDER_RESPONSE_DTO + fileName + "ResponseDto.java", resultResponseDtoStr);
@@ -52,8 +71,6 @@ public class FileUtil {
     }
 
     static void createMapperFile(String fileName, String mapperIntfStr, String mapperImplStr) {
-        final String OUTPUT_FOLDER_MAPPER_INTF = OUTPUT_FOLDER + "mapper\\intf\\";
-        final String OUTPUT_FOLDER_MAPPER_IMPL = OUTPUT_FOLDER + "mapper\\impl\\";
         String resultMapperIntfStr = MessageFormat.format(mapperIntfStr, PACKAGE_ROOT, fileName);
         String resultMapperImplStr = MessageFormat.format(mapperImplStr, PACKAGE_ROOT, fileName);
         try {
@@ -65,9 +82,6 @@ public class FileUtil {
     }
 
     static void createServiceFile(String fileName, String serviceStr, String serviceImplStr) {
-        final String OUTPUT_FOLDER_SERVICE_INTF = OUTPUT_FOLDER + "service\\intf\\";
-        final String OUTPUT_FOLDER_SERVICE_IMPL = OUTPUT_FOLDER + "service\\impl\\";
-
         String fileNameInCamelCase = Inflector.getInstance().lowerCamelCase(fileName);
         String resultServiceIntfStr = MessageFormat.format(serviceStr, PACKAGE_ROOT, fileName, fileNameInCamelCase);
         String resultServiceImplStr = MessageFormat.format(serviceImplStr, PACKAGE_ROOT, fileName, fileNameInCamelCase);
@@ -80,8 +94,6 @@ public class FileUtil {
     }
 
     static void createResourceFile(String fileName, String resourceStr) {
-        final String OUTPUT_FOLDER_RESOURCE = OUTPUT_FOLDER + "resource\\";
-
         String fileNameInCamelCase = Inflector.getInstance().lowerCamelCase(fileName);
         Inflector inflector = Inflector.getInstance();
         String hyphenSeparatedPluralizedFileName = inflector.underscore(inflector.pluralize(fileName)).replaceAll("_", "-");
@@ -94,8 +106,6 @@ public class FileUtil {
     }
 
     static void createResourceAssemblerFile(String fileName, String resourceAssemblerStr) {
-        final String OUTPUT_FOLDER_RESOURCE_ASSEMBLER = OUTPUT_FOLDER + "resource_assembler\\";
-
         String fileNameInCamelCase = Inflector.getInstance().lowerCamelCase(fileName);
         String resultResourceAssemblerStr = MessageFormat.format(resourceAssemblerStr, PACKAGE_ROOT, fileName, fileNameInCamelCase);
         try {
@@ -106,8 +116,6 @@ public class FileUtil {
     }
 
     static void createControllerFile(String fileName, String controllerStr) {
-        final String OUTPUT_FOLDER_CONTROLLER = OUTPUT_FOLDER + "controller\\";
-
         String fileNameInCamelCase = Inflector.getInstance().lowerCamelCase(fileName);
         Inflector inflector = Inflector.getInstance();
         String hyphenSeparatedPluralizedFileName = inflector.underscore(inflector.pluralize(fileName)).replaceAll("_", "-");
