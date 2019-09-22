@@ -75,11 +75,12 @@ public class Main {
     }
 
     private static boolean isLangDataTypeExists(String line) {
-        String lineLower = line.toLowerCase();
-        return lineLower.contains("long") || lineLower.contains("int") || lineLower.contains("integer")
-                || lineLower.contains("double") || lineLower.contains("float") || lineLower.contains("boolean")
-                || lineLower.contains("String") || lineLower.contains("Date") || lineLower.contains("byte")
-                || lineLower.contains("char") || lineLower.contains("character") || lineLower.contains("short");
+        String variableType = line.split(" ")[1].trim();
+        String variableTypeLower = variableType.toLowerCase();
+        return variableTypeLower.equals("long") || variableTypeLower.equals("int") || variableTypeLower.equals("integer")
+                || variableTypeLower.equals("double") || variableTypeLower.equals("float") || variableTypeLower.equals("boolean")
+                || variableTypeLower.equals("string") || variableTypeLower.equals("date") || variableTypeLower.equals("byte")
+                || variableTypeLower.equals("char") || variableTypeLower.equals("character") || variableTypeLower.equals("short");
     }
 
 }

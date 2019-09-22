@@ -1,5 +1,7 @@
 package {0}.entities;
 
+import java.util.Date;
+
 import {0}.BaseRequestDto;
 
 import lombok.Data;
