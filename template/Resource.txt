@@ -28,6 +28,8 @@ public class {1}Resource extends BaseResource '{'
 				.withMethod(HttpMethod.GET));
 		add(new ExtendedLink(linkTo(methodOn({1}Controller.class).update(id, null)).withSelfRel())
 				.withMethod(HttpMethod.PUT));
+        add(new ExtendedLink(linkTo(methodOn({1}Controller.class).delete(id)).withSelfRel())
+				.withMethod(HttpMethod.DELETE));
 
 		this.loadCommonLink();
 
